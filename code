@@ -1,0 +1,62 @@
+#include <iostream>
+#include <string>
+#include <chrono>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+using namespace chrono;
+
+// A list of random sentences for the typing test
+vector<string> sentences = {
+    "The quick brown fox jumps over the lazy dog.",
+    "C++ is an awesome programming language.",
+    "Practice makes perfect, especially in coding.",
+    "Artificial intelligence is shaping our future.",
+    "Typing speed improves with consistent practice."
+};
+
+// Function to generate a random sentence
+string getRandomSentence() {
+    srand(time(0));
+    return sentences[rand() % sentences.size()];
+}
+
+int main() {
+    cout << "Welcome to the Typing Speed Test!\n";
+    cout << "You will be given a random sentence to type.\n";
+    cout << "Type it as fast and accurately as possible.\n\n";
+
+    string sentence = getRandomSentence();
+    cout << "Your sentence is:\n\n";
+    cout << "\"" << sentence << "\"\n\n";
+
+    cout << "Press Enter when you are ready to start...\n";
+    cin.ignore();
+
+    // Start timing
+    auto start = high_resolution_clock::now();
+
+    cout << "Start typing:\n";
+    string userInput;
+    getline(cin, userInput);
+
+    // Stop timing
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<milliseconds>(stop - start).count();
+
+    cout << "\nTime taken: " << duration / 1000.0 << " seconds\n";
+
+    // Check accuracy
+    if (userInput == sentence) {
+        cout << "Great job! Your typing was 100% accurate.\n";
+    } else {
+        cout << "Oops! There were some mistakes in your typing.\n";
+        cout << "Correct Sentence:   " << sentence << "\n";
+        cout << "Your Input:         " << userInput << "\n";
+    }
+
+    cout << "\nThank you for playing the Typing Speed Test!\n";
+    return 0;
+}
